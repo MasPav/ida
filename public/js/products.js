@@ -3,6 +3,7 @@ $(function () {
 });
 
 const onSelectCategory = (category) => {
+    $('#categoriesOffcanvas .btn-close').click();
     setCurrentCategory(category);
     // toggle products loader
     toggleElements([

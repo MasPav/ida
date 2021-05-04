@@ -5,9 +5,9 @@
 @section('content')
 <section style="margin-top: 5em;">
     <div class="container">
-        <div class="row">
-            <div class="col-12 px-0">
-                <button class="btn btn-danger btn-sm text-dark mb-1 back-button" onclick="onGoBack()"> <i class="fa fa-arrow-left fa-sm"></i> back</button>
+        <div class="row mb-3">
+            <div class="col-12 px-lg-0">
+                <button class="btn btn-danger btn-sm text-dark back-button" onclick="onGoBack()"> <i class="fa fa-arrow-left fa-sm"></i> back</button>
             </div>
         </div>
         <div class="row pb-5">
