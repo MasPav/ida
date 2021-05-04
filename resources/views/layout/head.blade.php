@@ -19,3 +19,4 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     @yield('page-styles')
 </head>
+<body>

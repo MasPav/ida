@@ -96,10 +96,10 @@ const setCurrentCategory = (category) => {
     $(".current-category-wrapper").find("h1").text(category.title);
     $(".current-category-wrapper").show();
     // set active category in list
-
-    $(".sub-categories-list li")
+    const screenSize = window.matchMedia("(max-width: 992px)").matches ? 'sm-' : '';
+    $(`.${screenSize}sub-categories-list li`)
         .addClass("active")
-        .not($(`#categoryEl-${category.id}`))
+        .not($(`#${screenSize}categoryEl-${category.id}`))
         .removeClass("active");
     localStorage.setItem("currentCategory", JSON.stringify(category));
 };
@@ -108,7 +108,6 @@ const loadCurrentCategory = () => {
     if (localStorage.getItem("currentCategory")) {
         const category = JSON.parse(localStorage.getItem("currentCategory"));
         onSelectCategory(category);
-        // setCurrentCategory(category.categoryObj, category.categoryEl);
     }
 };
 
@@ -126,7 +125,6 @@ class HttpClient {
                 "X-Requested-With": "XMLHttpRequest",
             },
         }).then((res) => {
-            console.log(res);
             if (res.ok) {
                 return res.json();
             }

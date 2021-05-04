@@ -11,7 +11,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-12 d-block d-lg-none mb-3 d-flex">
+            <div class="col-12 d-block d-lg-none mb-3">
                 <button class="btn btn-danger text-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#categoriesOffcanvas" aria-controls="categoriesOffcanvas">
                     Categories <i class="fas fa-angle-double-right align-middle"></i>
                 </button>
@@ -73,7 +73,7 @@
         </div>
     </div>
 </section>
-<div class="offcanvas offcanvas-start" tabindex="-1" id="categoriesOffcanvas" aria-labelledby="categoriesOffcanvasLabel">
+<div class="offcanvas offcanvas-start d-block d-lg-none" tabindex="-1" id="categoriesOffcanvas" aria-labelledby="categoriesOffcanvasLabel">
     <div class="offcanvas-header">
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
@@ -88,9 +88,9 @@
                 </h2>
                 <div id="collapse{{$category->id}}" class="accordion-collapse collapse {{ $categoryKey === 0 ? 'show' : '' }} heading{{$category->id}}" data-bs-parent="#categoriesAccordion">
                     <div class="accordion-body">
-                        <ul class="list-unstyled sub-categories-list">
+                        <ul class="list-unstyled sm-sub-categories-list">
                             @foreach ($category->subCategories as $subCategoryKey => $subCategory)
-                            <li class="mb-2 p-2" id="categoryEl-{{ $subCategory->id }}" onclick="onSelectCategory({{ $subCategory }})">
+                            <li class="mb-2 p-2" id="sm-categoryEl-{{ $subCategory->id }}" onclick="onSelectCategory({{ $subCategory }})">
                                 {{ $subCategory->title }}
                             </li>
                             @endforeach
