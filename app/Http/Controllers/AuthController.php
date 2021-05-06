@@ -2,24 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
+    public function showLogin()
+    {
+        return view('auth.login');
+    }
     public function login(Request $request)
     {
         // $this->logout($request);
-        $this->validator($request);
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
-
             return redirect()->intended('/admin');
         }
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+            'login' => 'Incorrect username and password entered.',
+        ])->withInput();
     }
     public function logout(Request $request)
     {
@@ -29,14 +36,6 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/admin');
-    }
-
-    public function validator(Request $request) {
-        $validated = Validator::make($request->only('email', 'password'), ['email' => 'required|email', 'password' => 'required']);
-        if($validated->failed()) {
-            dd('hit');
-            return back()->withErrors($validated->errors());
-        }
+        return redirect('/login');
     }
 }

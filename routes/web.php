@@ -23,10 +23,9 @@ Route::get('products/{id}', 'ProductController@showProductDetails')->name('produ
 Route::middleware(['auth'])->group(function () {
     Route::get('admin', function () {
         return view('admin.dashboard');
-    });
+    })->name('admin');
 });
 
-Route::get('login', function () {
-    return view('auth.login');
-})->name('login');
+Route::get('login', 'AuthController@showLogin')->name('login');
 Route::post('login', 'AuthController@login')->name('login');
+Route::get('logout', 'AuthController@logout')->name('logout');

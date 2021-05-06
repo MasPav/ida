@@ -11,7 +11,7 @@
                 <li class="nav-item {{request()->routeIs('home') ? 'active' : ''}}">
                     <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item {{request()->routeIs('products') ? 'active' : ''}}">
+                <li class="nav-item {{request()->routeIs('products') || \Request::is('products/*') ? 'active' : ''}}">
                     <a class="nav-link" href="{{route('products')}}">Products</a>
                 </li>
                 <li class="nav-item {{request()->routeIs('about') ? 'active' : ''}}">
@@ -20,6 +20,11 @@
                 <li class="nav-item {{request()->routeIs('contact') ? 'active' : ''}}">
                     <a class="nav-link" href="#">Contact</a>
                 </li>
+                @if(Auth::check())
+                <li class="nav-item {{request()->routeIs('admin') ? 'active' : ''}}">
+                    <a class="nav-link" href="{{route('admin')}}">Admin</a>
+                </li>
+                @endif
             </ul>
             <!-- <form class="form-inline">
                 <div class="input-group">
@@ -32,5 +37,15 @@
                 </div>
             </form> -->
         </div>
+        @if(request()->routeIs('admin') )
+        <div class="dropdown">
+            <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="{{route('logout')}}">Logout</a></li>
+            </ul>
+        </div>
+        @endif
     </div>
 </nav>
