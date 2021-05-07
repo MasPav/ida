@@ -50,11 +50,12 @@
 @section('admin.scripts')
 <script>
     $(function() {
-        $('#users-table').DataTable( {
-            columnDefs: [
-                { orderable: false, targets: 4 }
-            ]
-        } );
-        })
+        $('#users-table').DataTable({
+            columnDefs: [{
+                orderable: false,
+                targets: 2
+            }]
+        });
+    })
 </script>
 @endsection

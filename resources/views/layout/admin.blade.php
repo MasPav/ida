@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('page-styles')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css">
+@yield('admin.styles')
 @endsection
 @section('content')
 <section class="h-100 d-lg-flex">

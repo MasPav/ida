@@ -22,4 +22,8 @@ class Category extends Model
     {
         return date("d M Y", strtotime($value));
     }
+    public function getOnlySubCategories()
+    {
+        return $this->where('parent_id', '<>', 'NULL')->get();
+    }
 }

@@ -10,21 +10,26 @@ use App\Models\Category;
 
 class AdminController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         return view('admin.dashboard', ['productsCount' => Product::count(), 'categoriesCount' => Category::count(), 'usersCount' => User::count()]);
     }
 
-    public function showProducts() {
+    public function showProducts()
+    {
         $products = Product::latest()->get();
-        return view('admin.products', ['products' => $products]);
+        $category = new Category();
+        return view('admin.products', ['products' => $products, 'subCategories' => $category->getOnlySubCategories()]);
     }
 
-    public function showCategories() {
+    public function showCategories()
+    {
         $categories = Category::with('parentCategory')->orderBy('title')->get();
         return view('admin.categories', ['categories' => $categories]);
     }
 
-    public function showUsers() {
+    public function showUsers()
+    {
         $users = User::orderBy('name')->get();
         return view('admin.users', ['users' => $users]);
     }
