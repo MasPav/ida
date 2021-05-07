@@ -10,4 +10,16 @@ class Category extends Model
     {
         return $this->hasMany(self::class, 'parent_id')->with('subCategories');
     }
+    public function parentCategory()
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
+    public function getCreatedAtAttribute($value)
+    {
+        return date("d M Y", strtotime($value));
+    }
+    public function getUpdatedAtAttribute($value)
+    {
+        return date("d M Y", strtotime($value));
+    }
 }

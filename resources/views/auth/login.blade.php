@@ -1,24 +1,26 @@
 @include('layout.head')
 <section class="d-flex flex-column align-items-center vh-100 justify-content-center">
     @if ($errors->any())
-    <div class="alert alert-danger w-25 py-2 justify-content-center">
+    <div class="alert alert-danger w-lg-25 py-2 justify-content-center">
         @foreach ($errors->all() as $error)
         <p class="text-center mb-1">{{$error}}</p>
         @endforeach
     </div>
     @endif
-    <div class="card shadow-sm p-5 rounded-3 w-25">
+    <div class="card shadow-sm p-5 rounded-3 w-lg-25">
         <a class="text-center mb-2" href="{{route('home')}}"><i class="fas fa-home fa-lg"></i></a>
         <h4 class="text-center">Admin Login</h4>
         <div class="card-body">
             <form action="{{route('login')}}" method="post">
                 @csrf()
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" name="email" id="floatingEmail" placeholder="email" required value="{{old('email')}}">
+                    <input type="email" class="form-control" name="email" id="floatingEmail" placeholder="email"
+                        required value="{{old('email')}}">
                     <label for="floatingEmail">Email address</label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="password" required value="{{old('password')}}">
+                    <input type="password" class="form-control" name="password" id="floatingPassword"
+                        placeholder="password" required value="{{old('password')}}">
                     <label for="floatingPassword">Password</label>
                 </div>
                 <div class="d-grid mt-3">

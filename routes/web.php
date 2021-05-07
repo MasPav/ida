@@ -20,10 +20,11 @@ Route::get('products', 'ProductController@index')->name('products');
 Route::get('products/search', 'ProductController@search')->name('searchProducts');
 Route::get('products/{id}', 'ProductController@showProductDetails')->name('productDetails');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('admin', function () {
-        return view('admin.dashboard');
-    })->name('admin');
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('', 'AdminController@index')->name('dashboard');
+    Route::get('products', 'AdminController@showProducts')->name('products');
+    Route::get('categories', 'AdminController@showCategories')->name('categories');
+    Route::get('users', 'AdminController@showUsers')->name('users');
 });
 
 Route::get('login', 'AuthController@showLogin')->name('login');

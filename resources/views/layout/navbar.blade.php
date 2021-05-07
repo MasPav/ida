@@ -1,9 +1,11 @@
 <nav class="navbar navbar-expand-lg shadow fixed-top navbar-light font-weight-bold bg-white">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{route('home')}}">
-            <img src="{{asset('images/paper_img/WhatsApp Image 2021-04-12 at 9.09.58 PM (1).jpeg')}}" class="img-fluid shadow-sm rounded" alt="" style="height: 2.3em;">
+            <img src="{{asset('images/paper_img/WhatsApp Image 2021-04-12 at 9.09.58 PM (1).jpeg')}}"
+                class="img-fluid shadow-sm rounded" alt="" style="height: 2.3em;">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarToggler" aria-controls="mainNavbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarToggler"
+            aria-controls="mainNavbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="mainNavbarToggler">
@@ -21,8 +23,10 @@
                     <a class="nav-link" href="#">Contact</a>
                 </li>
                 @if(Auth::check())
-                <li class="nav-item {{request()->routeIs('admin') ? 'active' : ''}}">
-                    <a class="nav-link" href="{{route('admin')}}">Admin</a>
+                <li class="nav-item @if (\Request::is('admin') || \Request::is('admin/*'))
+                active
+                @endif ">
+                    <a class="nav-link" href="{{route('admin.dashboard')}}">Admin</a>
                 </li>
                 @endif
             </ul>
@@ -37,15 +41,18 @@
                 </div>
             </form> -->
         </div>
-        @if(request()->routeIs('admin') )
-        <div class="dropdown">
-            <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-user"></i>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="{{route('logout')}}">Logout</a></li>
-            </ul>
+        <div class="d-none d-lg-block">
+            @if(request()->routeIs('admin.*') )
+            <div class="dropdown">
+                <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="{{route('logout')}}">Logout</a></li>
+                </ul>
+            </div>
+            @endif
         </div>
-        @endif
     </div>
 </nav>
