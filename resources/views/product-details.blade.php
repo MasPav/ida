@@ -7,12 +7,13 @@
     <div class="container">
         <div class="row mb-3">
             <div class="col-12 px-lg-0">
-                <button class="btn btn-danger btn-sm text-dark back-button" onclick="onGoBack()"> <i class="fa fa-arrow-left fa-sm"></i> back</button>
+                <button class="btn btn-danger btn-sm text-dark back-button" onclick="onGoBack()"> <i
+                        class="fa fa-arrow-left fa-sm"></i> back</button>
             </div>
         </div>
         <div class="row pb-5">
             <div class="col-12 col-md-6 text-center shadow">
-                <img src="{{asset('images/paper_img/'.$product->images[0])}}" alt="" class="img-fluid">
+                <img src="{{asset('storage/images/'.$product->images[0])}}" alt="" class="img-fluid">
             </div>
             <div class="col-12 col-md-6 px-5">
                 <h1 class="display-6">{{$product->name}}</h1>
@@ -20,8 +21,10 @@
                 <p><i class="fas fa-tags text-danger"></i> {{$product->category->title}}</p>
                 <div class="row" id="product-gallery">
                     @foreach ($product->images as $image)
-                    <div class="col-12 col-md-3" data-src="{{asset('images/paper_img/'.$image)}}">
-                        <img src="{{asset('images/paper_img/'.$image)}}" alt="{{$product->name}}" class="img-fluid product-gallery-image" style="transition: transform .5s; height: 6em; object-fit: cover; object-position: center;">
+                    <div class="col-12 col-md-3" data-src="{{asset('storage/images/'.$image)}}">
+                        <img src="{{asset('storage/images/'.$image)}}" alt="{{$product->name}}"
+                            class="img-fluid product-gallery-image"
+                            style="transition: transform .5s; height: 6em; object-fit: cover; object-position: center;">
                     </div>
                     @endforeach
                 </div>
@@ -36,7 +39,8 @@
             <div class="col-12 col-md-6 col-lg-3">
                 <a href="{{route('productDetails', ['id' => $rProduct->id])}}">
                     <div class="card product-card">
-                        <img src="{{asset('images/paper_img/'.$rProduct->images[0])}}" alt="Product image" class="img-fluid card-img-top">
+                        <img src="{{asset('storage/images/'.$rProduct->images[0])}}" alt="Product image"
+                            class="img-fluid card-img-top">
                         <div class="card-body">
                             <p>
                                 {{ Str::limit($rProduct->name, 50, '...') }}

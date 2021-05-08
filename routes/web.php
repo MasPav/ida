@@ -23,6 +23,8 @@ Route::get('products/{id}', 'ProductController@showProductDetails')->name('produ
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('', 'AdminController@index')->name('dashboard');
     Route::get('products', 'AdminController@showProducts')->name('products');
+    Route::post('products', 'AdminController@storeProducts')->name('products');
+    Route::delete('products/{id}', 'AdminController@deleteProducts')->name('deleteProducts');
     Route::get('categories', 'AdminController@showCategories')->name('categories');
     Route::get('users', 'AdminController@showUsers')->name('users');
 });
