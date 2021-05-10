@@ -7,7 +7,7 @@
         @endforeach
     </div>
     @endif
-    <div class="card shadow-sm w-sm-75 py-2  p-lg-5 rounded-3 w-lg-25">
+    <div class="card shadow-sm py-2 p-lg-3 rounded-3">
         <a class="text-center mb-2" href="{{route('home')}}"><i class="fas fa-home fa-lg"></i></a>
         <h4 class="text-center">Admin Login</h4>
         <div class="card-body">

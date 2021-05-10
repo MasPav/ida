@@ -32,8 +32,8 @@
                     <tr>
                         <th></th>
                         <th>Name</th>
-                        <th>Description</th>
                         <th>Category</th>
+                        <th>Description</th>
                         <th style="width: 100px;">Added On</th>
                         <th></th>
                     </tr>
@@ -44,17 +44,19 @@
                         <td>
                             <div id="product-gallery-{{$product->id}}" class="product-gallery"
                                 onclick="onShowGallery({{$product}}, $(this))">
-                                <img src="{{asset('storage/images/'.$product->images[0])}}" alt="" style="width: 3em;">
+                                <img src="{{empty($product->images[0]) ? asset('images/product-placeholder.png') : asset('storage/images/'.$product->images[0])}}"
+                                    alt="" style="width:5em; height:5em; object-fit:cover">
                             </div>
                         </td>
                         <td class="text-truncate" style="max-width: 150px;">{{ $product->name ?? '--' }}
                         </td>
-                        <td class="text-truncate" style="max-width: 200px;">{{ $product->description ?? '--' }}</td>
                         <td class="text-truncate" style="max-width: 10px;">{{ $product->category->title ?? '--' }}</td>
+                        <td class="text-truncate" style="max-width: 200px;">{{ $product->description ?? '--' }}</td>
                         <td>{{ $product->created_at ?? '--' }}</td>
                         <td>
                             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-primary"><i class="fa fa-eye"></i></button>
+                                <button type="button" class="btn btn-primary" onclick="onEditProduct({{ $product }})"><i
+                                        class="fa fa-pen"></i></button>
                                 <button type="button" class="btn btn-danger"
                                     onclick="onRemoveProduct({{ $product }})"><i class="fa fa-trash"></i></button>
                             </div>
@@ -80,27 +82,28 @@
             <form action="{{ route('admin.products') }}" method="POST" enctype="multipart/form-data"
                 id="addProductForm">
                 @csrf
+                <input name="_method" type="hidden" value="POST" class="method">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addProductModalLabel">Add Product</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row shadow-sm py-2">
+                    <div class="row py-2">
                         <div class="col-12 col-lg-6">
                             <div class="form-floating mb-3">
-                                <input type="text" name="name" class="form-control" id="productName"
-                                    placeholder="name@example.com" required>
+                                <input type="text" name="name" class="form-control" id="productName" placeholder="name"
+                                    required>
                                 <label for="productName">Name*</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="floatingSelect"
+                                <select class="form-select" id="productCategory"
                                     aria-label="Floating label select example" name="category_id" required>
                                     <option value="">Select Category</option>
                                     @foreach ($subCategories as $category)
                                     <option value="{{$category->id}}">{{$category->title}}</option>
                                     @endforeach
                                 </select>
-                                <label for="floatingSelect">Category</label>
+                                <label for="productCategory">Category</label>
                             </div>
                             <div class="form-floating">
                                 <textarea class="form-control" placeholder="Leave a comment here"
@@ -110,7 +113,8 @@
 
                         </div>
                         <div class="col-12 col-lg-6 text-center">
-                            <button class="btn btn-primary addProductImageBtn" type="button">Add Images</button>
+                            <button class="btn btn-primary addProductImageBtn" type="button"><i
+                                    class="fas fa-images"></i></button>
                             <input type="file" name="images[]" multiple class="addProductImagesUpload"
                                 style="display: none;" accept="image/*" onchange="onAddImagesChange(event)">
                             <button class="btn btn-danger removeProductImagesUpload" type="button"
@@ -122,7 +126,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary addProductFormSubmitBtn">Save
+                    <button type="submit" class="btn btn-success addProductFormSubmitBtn">Save
                         <i class="fa fa-spinner fa-spin" style="display: none;"></i>
                     </button>
                 </div>
@@ -137,6 +141,7 @@
 <script src="{{asset('js/lightGallery-master/dist/js/lightgallery-all.min.js')}}"></script>
 <script src="{{asset('js/lightGallery-master/lib/jquery.mousewheel.min.js')}}"></script>
 <script>
+    const productsUrl = "{{ route('admin.products') }}";
     const imagesUrl = "{{ URL::asset('storage/images/') }}/"; // take note of trailing /
     $(function() {
         $('#products-table').DataTable({
@@ -158,11 +163,20 @@
         $('.removeProductImagesUpload').on('click', function() {
             $('.addProductImagesUpload').val('')
             $('.uploadedImages').empty();
+            $('#existingImages').val('');
             $(this).hide();
         })
         $('#addProductForm').on('submit', function() {
             $('.addProductFormSubmitBtn').attr('disabled', true);
             $('.addProductFormSubmitBtn .fa-spinner').show();
+        });
+        $('#addProductModal').on('hidden.bs.modal', function() {
+            $('#addProductForm').trigger('reset');
+            $('.uploadedImages').empty();
+            $('.removeProductImagesUpload').hide();
+            $(this).find('.modal-title').text('Add Product');
+            $('#addProductForm').attr('action', productsUrl);
+            $(this).find('.method').val('POST');
         });
     });
     const onAddImagesChange = (e) => {
@@ -175,12 +189,33 @@
             const file = files[index];
             const reader = new FileReader();
             reader.onload = function(re) {
-                $('.uploadedImages').prepend(`<img class='img-thumbnail me-2 mb-2 shadow-sm' style='width:5em; height:5em; object-fit:cover' src='${re.target.result}' alt='uploaded image'>`);
+                $('.uploadedImages').append(`<img class='img-thumbnail me-2 mb-2 shadow-sm' style='width:5em; height:5em; object-fit:cover' src='${re.target.result}' alt='uploaded image'>`);
                 $('.removeProductImagesUpload').show();
             }
             reader.readAsDataURL(file);
 
         }
+    }
+    const onEditProduct = (product) => {
+        const modal = $('#addProductModal');
+        modal.find('.modal-title').text('Edit Product');
+        modal.find('#productName').val(product.name);
+        modal.find('#productCategory').val(product.category_id);
+        modal.find('#productDescription').text(product.description || '');
+        modal.find('.modal-body').append(`<input type='hidden' name='existing_images' id='existingImages'>`);
+        $('#existingImages').val(product.images);
+        let imagesEl = '';
+        if(product.images.length > 0) {
+            product.images.forEach(link => {
+            imagesEl+=`<img class='img-thumbnail me-2 mb-2 shadow-sm' style='width:5em; height:5em; object-fit:cover' src='${imagesUrl.concat(link)}' alt='uploaded image'>`;
+            });
+            $('.uploadedImages').append(imagesEl);
+            $('.removeProductImagesUpload').show();
+        }
+        const url = $('#addProductForm').attr('action').concat(`/${product.id}`);
+        $('#addProductForm').attr('action', url);
+        modal.find('.method').val('PATCH');
+        modal.modal('show');
     }
     const onRemoveProduct = (product) => {
         Swal.fire({
@@ -199,7 +234,8 @@
         });
     }
     const onShowGallery = (product, productEl) => {
-        const images = [];
+        if(product.images.length > 0) {
+            const images = [];
         product.images.forEach(image => {
             images.push({
                 "src": `${imagesUrl.concat(image)}`,
@@ -219,6 +255,7 @@
             rotate: false,
             download: false,
         })
+        }
     }
 </script>
 @endsection
