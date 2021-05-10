@@ -57,7 +57,7 @@
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="{{ route('admin.categories') }}" method="POST" id="addUserForm">
+            <form action="{{ route('admin.users') }}" method="POST" id="addUserForm">
                 @csrf
                 <input name="_method" type="hidden" value="POST" class="method">
                 <div class="modal-header">
