@@ -56,6 +56,21 @@
                 </div>
             </li>
         </a>
+        <hr>
+        <a href="{{ route('admin.profile') }}">
+            <li class="px-4 py-2 @if (request()->routeIs('admin.profile'))
+                border-start border-danger border-2 text-danger
+            @endif">
+                <div class="row">
+                    <div class="col-2">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="col-10">
+                        Your Profile
+                    </div>
+                </div>
+            </li>
+        </a>
     </ul>
 </div>
 <div class="d-lg-none">

@@ -32,8 +32,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::delete('categories/{id}', 'AdminController@deleteCategories')->name('deleteCategory');
     Route::get('users', 'AdminController@showUsers')->name('users');
     Route::post('users', 'AdminController@storeUser')->name('users');
-    Route::patch('users/{id}', 'AdminController@updateUser');
+    Route::patch('users/{id}', 'AdminController@updateUser')->name('updateUser');
     Route::delete('users/{id}', 'AdminController@deleteUser')->name('deleteUser');
+    Route::get('profile', 'AdminController@showProfile')->name('profile');
 });
 
 Route::get('login', 'AuthController@showLogin')->name('login');

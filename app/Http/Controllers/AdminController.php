@@ -52,14 +52,26 @@ class AdminController extends Controller
     }
     public function updateUser($id, Request $request)
     {
+        $data = $request->except('_token', '_method');
+        $validator = Validator::make($data, ['name' => 'required|min:2', 'password'=>'nullable|min:6']);
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
         $user = User::find($id);
-        $user->update($request->except('_token', '_method'));
+        $userData = $request->only('name', 'email', $request->password ? 'password': '');
+        if($request->password) {
+            $userData['password'] = Hash::make($request->password);
+        }
+        $user->update($userData);
         return back()->with('userUpdated', 'User Updated');
     }
     public function deleteUser($id)
     {
         User::destroy($id);
         return back()->with('userDeleted', 'User Deleted');
+    }
+    public function showProfile() {
+        return view('admin.profile');
     }
     public function storeProducts(Request $request) {
         $data = $request->except('images', '_token');
