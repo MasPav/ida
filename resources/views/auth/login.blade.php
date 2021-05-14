@@ -1,13 +1,14 @@
 @include('layout.head')
 <section class="d-flex flex-column align-items-center vh-100 justify-content-center">
-    @if ($errors->any())
-    <div class="alert alert-danger w-lg-25 py-2 justify-content-center">
-        @foreach ($errors->all() as $error)
-        <p class="text-center mb-1">{{$error}}</p>
-        @endforeach
-    </div>
-    @endif
+
     <div class="card shadow-sm py-2 p-lg-3 rounded-3">
+        @if ($errors->any())
+        <div class="alert alert-danger py-2 justify-content-center">
+            @foreach ($errors->all() as $error)
+            <p class="text-center mb-1">{{$error}}</p>
+            @endforeach
+        </div>
+        @endif
         <a class="text-center mb-2" href="{{route('home')}}"><i class="fas fa-home fa-lg"></i></a>
         <h4 class="text-center">Admin Login</h4>
         <div class="card-body">

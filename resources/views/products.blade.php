@@ -15,7 +15,8 @@
             <div class="col-12 d-block d-lg-none mb-3">
                 <button class="btn btn-danger text-dark" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#categoriesOffcanvas" aria-controls="categoriesOffcanvas">
-                    Categories <i class="fas fa-angle-double-right align-middle"></i>
+                    <i class="fas fa-angle-double-right align-middle" data-bs-toggle="offcanvas"
+                    data-bs-target="#categoriesOffcanvas" aria-controls="categoriesOffcanvas"></i>
                 </button>
             </div>
             <div class="col-lg-3 mb-5 mb-sm-0 shadow d-none d-lg-block">
